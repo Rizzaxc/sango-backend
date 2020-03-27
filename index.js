@@ -14,5 +14,7 @@ scraper.lookup(kanji).then(amHanViet => {
 
 jisho.searchForKanji(kanji).then(result => {
   console.log('Meaning: ' + result.meaning)
+  console.log('Onyomi: ' + result.onyomi)
+  console.log('Kunyomi: ' + result.kunyomi)
 })
 
