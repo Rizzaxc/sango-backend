@@ -9,7 +9,9 @@
   },
   "dependencies": {
     "bulma": "^0.8.1",
+    "cheerio": "^1.0.0-rc.3",
     "core-js": "^3.6.4",
+    "unofficial-jisho-api": "^2.0.8",
     "vue": "^2.6.11",
     "webpack": "^4.42.1"
   },
