@@ -1,14 +1,23 @@
 <template>
-  <div id="app">
+  <div id="app" @keyup.enter="SearchBar.lookup()">
     <NavBar />
     <div class="columns is-centered">
 
-      <div class="column is-half is-size-4">
-          <SearchBar />
-        <div class="search-results">
-          <KanjiCard />
-          <KanjiCard />
+      <div class="column is-half">
+        <SearchBar />
+        <div class="columns is-centered is-size-3">
+          <div class="column is-half">
+            <KanjiCard id="result"></KanjiCard>
+          </div>
+        </div>
 
+        <div class="search-history is-size-4">
+          <KanjiCard />
+          <KanjiCard />
+          <KanjiCard />
+          <KanjiCard />
+          <KanjiCard />
+          <KanjiCard />
         </div>
 
 
@@ -34,7 +43,15 @@
 </script>
 
 <style scoped>
-  .search-results {
+  #result {
+    width: 100%
+  }
+  .search-history {
 
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: space-evenly;
+    height: 100%;
   }
 </style>
