@@ -8,15 +8,13 @@
   },
   "author": "Rizzaxc",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/Rizzaxc/Sango"
+    "type": "git",
+    "url": "https://github.com/Rizzaxc/Sango"
   },
   "license": "MIT",
   "dependencies": {
     "axios": "^0.19.2",
-    "bulma": "^0.8.1",
     "cheerio": "^1.0.0-rc.3",
-    "unofficial-jisho-api": "^2.0.8",
-    "vue": "^2.6.11"
+    "unofficial-jisho-api": "^2.0.8"
   }
 }
