@@ -41,9 +41,9 @@
             async lookup() {
                 console.log(this.kanji)
                 const axios = require('axios').default
-                let kanjiUrl = encodeURI("http://localhost:8000/jisho/" + this.kanji)
-                axios.get(kanjiUrl).then(response => {
-                    console.log(response)
+                let jishoUrl = encodeURI("http://localhost:8000/jisho/" + this.kanji)
+                axios.get(jishoUrl).then(response => {
+                    this.$root.$emit('newKanjiFetched', response.data)
                 }).catch(error => {
                     console.log(error)
                 })

@@ -7,7 +7,7 @@
         <SearchBar />
         <div class="columns is-centered is-size-3">
           <div class="column is-half">
-            <KanjiCard id="result"></KanjiCard>
+            <KanjiCard id="result" />
           </div>
         </div>
 
@@ -29,29 +29,46 @@
 </template>
 
 <script>
-  import NavBar from './components/NavBar.vue'
-  import SearchBar from './components/SearchBar.vue'
-  import KanjiCard from './components/KanjiCard.vue'
-  export default {
-    name: 'App',
-    components: {
-      NavBar,
-      SearchBar,
-      KanjiCard
+    import NavBar from './components/NavBar.vue'
+    import SearchBar from './components/SearchBar.vue'
+    import KanjiCard from './components/KanjiCard.vue'
+
+    export default {
+        name: 'App',
+        created() {
+            this.$root.$on('newKanjiFetched', this.updateResults)
+        },
+        beforeDestroy() {
+            this.$root.$off('newKanjiFetched', this.updateResults)
+        },
+        data() {
+            return {
+                results: []
+            }
+        },
+        components: {
+            NavBar,
+            SearchBar,
+            KanjiCard
+        },
+        methods: {
+            updateResults(newKanji) {
+                this.results.push(newKanji)
+            }
+        }
     }
-  }
 </script>
 
 <style scoped>
-  #result {
-    width: 100%
-  }
-  .search-history {
+    #result {
+        width: 100%
+    }
 
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-content: space-evenly;
-    height: 100%;
-  }
+    .search-history {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-content: space-evenly;
+        height: 100%;
+    }
 </style>
