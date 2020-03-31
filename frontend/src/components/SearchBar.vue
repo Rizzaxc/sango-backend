@@ -39,23 +39,7 @@
             },
 
             async lookup() {
-                // const JishoApi = require('unofficial-jisho-api')
-                // const jisho = new JishoApi()
-
-                const HanVietScraper = require('../assets/js/han-viet-scraper.js')
-                const scraper = new HanVietScraper()
-
                 console.log(this.kanji)
-                await scraper.lookup(this.kanji).then(amHanViet => {
-                    console.log('Am Han Viet: ' + amHanViet)
-                })
-
-                // await jisho.searchForKanji(this.kanji).then(result => {
-                //     console.log('Meaning: ' + result.meaning)
-                //     console.log('Onyomi: ' + result.onyomi)
-                //     console.log('Kunyomi: ' + result.kunyomi)
-                // });
-
             }
         }
     }

@@ -1,29 +1,44 @@
-const JishoApi = require('unofficial-jisho-api');
-const jisho = new JishoApi();
+const express = require('express')
+const app = express()
+const port = 8000
+
+const JishoApi = require('unofficial-jisho-api')
+const jisho = new JishoApi()
 let HanVietScraper = require('./han-viet-scraper')
-let scraper = new HanVietScraper()
+let hvScraper = new HanVietScraper()
 
-const readline = require('readline')
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
+
+app.get('/jisho/:kanji', (req, res) => {
+
+    kanji = req.params.kanji
+    jishoBundle = {
+        onyomi: String,
+        kunyomi: String,
+        meaning: String
+    }
+
+    jisho.searchForKanji(kanji).then(result => {
+        jishoBundle.kunyomi = Array(result.kunyomi).toString()
+        jishoBundle.onyomi = Array(result.onyomi).toString()
+        jishoBundle.meaning = result.meaning
+
+        res.send(jishoBundle)
+    }).catch(error => {
+        console.log(error)
+    })
+
 })
 
-rl.question('Kanji to search? ', (kanji) => {
+app.get('/han-viet/:kanji', (req, res) => {
+    kanji = req.params.kanji
 
-  scraper.lookup(kanji).then(amHanViet => {
-    console.log('Am Han Viet: ' + amHanViet)
-  })
-  
-  jisho.searchForKanji(kanji).then(result => {
-    console.log('Meaning: ' + result.meaning)
-    console.log('Onyomi: ' + result.onyomi)
-    console.log('Kunyomi: ' + result.kunyomi)
-  })
-
-  rl.close()
-  
+    hvScraper.lookup(kanji).then(result => {
+        res.send({amHanViet: result})
+    }).catch(error => {
+        console.log(error)
+    })
 })
 
 
 
+app.listen(port, () => console.log(`Backend listening on port ${port}!`))
