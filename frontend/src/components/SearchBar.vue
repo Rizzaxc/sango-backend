@@ -42,8 +42,17 @@
                 console.log(this.kanji)
                 const axios = require('axios').default
                 let jishoUrl = encodeURI("http://localhost:8000/jisho/" + this.kanji)
-                axios.get(jishoUrl).then(response => {
-                    this.$root.$emit('newKanjiFetched', response.data)
+                let hanVietUrl = encodeURI("http://localhost:8000/han-viet/" + this.kanji)
+
+                axios.get(jishoUrl).then(jishoResponse => {
+                    let resultBundle = jishoResponse.data
+                    axios.get(hanVietUrl).then(hanVietResponse => {
+                        resultBundle.hanViet = hanVietResponse.data.amHanViet
+                        console.log(resultBundle)
+                        this.$root.$emit('newKanjiFetched', resultBundle)
+                    }).catch(error => {
+                        console.log(error)
+                    })
                 }).catch(error => {
                     console.log(error)
                 })

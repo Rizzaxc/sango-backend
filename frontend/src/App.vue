@@ -55,6 +55,11 @@
             updateResults(newKanji) {
                 this.results.push(newKanji)
             }
+        },
+        computed: {
+            mostRecentResult() {
+                return this.results.slice(-1)[0]
+            }
         }
     }
 </script>
