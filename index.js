@@ -1,6 +1,18 @@
 const express = require('express')
 const app = express()
+const bodyParser = require('body-parser')
+const cors = require('cors')
 const port = 8000
+
+let corsOptions = {
+    origin: 'http://localhost:8080',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
+app.use(bodyParser.json());
+app.use(cors(corsOptions));
+app.use(express.urlencoded({ extended: true }))
+
 
 const JishoApi = require('unofficial-jisho-api')
 const jisho = new JishoApi()
