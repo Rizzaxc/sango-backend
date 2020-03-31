@@ -30,7 +30,8 @@
                 kanji: {
                     type: String,
                     default: ''
-                }
+                },
+                isSearching: false
             }
         },
         methods: {
@@ -39,7 +40,10 @@
             },
 
             async lookup() {
-                console.log(this.kanji)
+                // if (this.isSearching) {
+                //     return
+                // }
+                // this.isSearching = true
                 const axios = require('axios').default
                 let jishoUrl = encodeURI("http://localhost:8000/jisho/" + this.kanji)
                 let hanVietUrl = encodeURI("http://localhost:8000/han-viet/" + this.kanji)
@@ -48,7 +52,7 @@
                     let resultBundle = jishoResponse.data
                     axios.get(hanVietUrl).then(hanVietResponse => {
                         resultBundle.hanViet = hanVietResponse.data.amHanViet
-                        console.log(resultBundle)
+
                         this.$root.$emit('newKanjiFetched', resultBundle)
                     }).catch(error => {
                         console.log(error)
@@ -56,6 +60,8 @@
                 }).catch(error => {
                     console.log(error)
                 })
+
+                this.isSearching = false
             }
         }
     }

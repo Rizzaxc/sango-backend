@@ -5,19 +5,17 @@
 
       <div class="column is-half">
         <SearchBar />
-        <div class="columns is-centered is-size-3">
+        <div class="columns is-centered">
           <div class="column is-half">
-            <KanjiCard id="result" />
+            <KanjiCard 
+                id="result"
+                v-if="typeof latestResult !== 'undefined'"
+                v-bind:kanji="latestResult"
+            />
           </div>
         </div>
 
         <div class="search-history is-size-4">
-          <KanjiCard />
-          <KanjiCard />
-          <KanjiCard />
-          <KanjiCard />
-          <KanjiCard />
-          <KanjiCard />
         </div>
 
 
@@ -43,7 +41,7 @@
         },
         data() {
             return {
-                results: []
+                results: [],
             }
         },
         components: {
@@ -57,7 +55,7 @@
             }
         },
         computed: {
-            mostRecentResult() {
+            latestResult() {
                 return this.results.slice(-1)[0]
             }
         }

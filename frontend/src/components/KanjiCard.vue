@@ -3,24 +3,24 @@
         <div class="card-content">
             <div class="columns">
                 <div class="column is-one-quarter" id="big-kanji">
-                    <a>安</a>
+                    <a>{{kanji.writing}}</a>
                 </div>
     
                 <div class="column" id="kanji-info">
                     <div class="han-viet">
-                        Han Viet: An
+                        Han Viet: {{kanji.hanViet}}
                     </div>
     
                     <div class="meaning">
-                        Meaning: peace
+                        Meaning: {{kanji.meaning}}
                     </div>
     
                     <div class="onyomi">
-                        Onyomi: あん
+                        Onyomi: {{kanji.onyomi}}
                     </div>
     
                     <div class="kunyomi">
-                        Kunyomi: やす
+                        Kunyomi: {{kanji.kunyomi}}
                     </div>
     
                 </div>
@@ -37,11 +37,11 @@
         props: {
             kanji: {
                 type: Object,
-                required: false, // TODO: mark true
-                writing: String,
+                required: true,
                 onyomi: String,
                 kunyomi: String,
                 meaning: String,
+                writing: String,
                 hanViet: String
             }
         }
