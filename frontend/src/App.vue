@@ -1,5 +1,5 @@
 <template>
-  <div id="app" @keyup.enter="SearchBar.lookup()">
+  <div id="app">
     <NavBar />
     <div class="columns is-centered">
 

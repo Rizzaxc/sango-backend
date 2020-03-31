@@ -35,6 +35,15 @@
     export default {
         name: 'KanjiCard',
         props: {
+            kanji: {
+                type: Object,
+                required: false, // TODO: mark true
+                writing: String,
+                onyomi: String,
+                kunyomi: String,
+                meaning: String,
+                hanViet: String
+            }
         }
     }
 </script>

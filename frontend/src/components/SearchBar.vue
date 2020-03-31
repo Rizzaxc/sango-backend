@@ -2,10 +2,16 @@
     <div class="searchbar">
         <div class="field has-addons">
             <div class="control is-expanded">
-                <input class="input has-text-black" id="kanji-input" type="text" placeholder="Enter a Kanji">
+                <input 
+                    class="input has-text-black" 
+                    id="kanji-input" type="text" 
+                    placeholder="Enter a Kanji"
+                    @input="handleInput($event.target.value)"
+                    @keyup.enter="lookup()"
+                >
             </div>
             <div class="control">
-                <a class="button is-info" @click="lookup()" @keyup.enter="lookup()">
+                <a class="button is-info" @click="lookup()">
                     Lookup
                 </a>
             </div>
@@ -21,9 +27,17 @@
         props: {},
         data() {
             return {
+                kanji: {
+                    type: String,
+                    default: ''
+                }
             }
         },
         methods: {
+            handleInput(input) {
+                this.kanji = input
+            },
+
             async lookup() {
                 // const JishoApi = require('unofficial-jisho-api')
                 // const jisho = new JishoApi()
@@ -31,8 +45,7 @@
                 const HanVietScraper = require('../assets/js/han-viet-scraper.js')
                 const scraper = new HanVietScraper()
 
-                this.kanji = document.getElementById('kanji-input').value
-
+                console.log(this.kanji)
                 await scraper.lookup(this.kanji).then(amHanViet => {
                     console.log('Am Han Viet: ' + amHanViet)
                 })
