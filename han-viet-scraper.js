@@ -21,7 +21,7 @@ module.exports = class HanVietScraper {
                 console.log(error)
             })
 
-        return Array.from(amHanViet).join(', ')
+        return Array.from(amHanViet)
     }
 
 }

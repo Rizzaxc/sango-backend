@@ -2,25 +2,25 @@
     <div class="card">
         <div class="card-content">
             <div class="columns">
-                <div class="column is-one-quarter" id="big-kanji">
-                    <a>{{kanji.writing}}</a>
+                <div class="column is-size-1 is-one-quarter">
+                    <a id="big-writing">{{kanji.writing}}</a>
                 </div>
     
                 <div class="column" id="kanji-info">
                     <div class="han-viet">
-                        Han Viet: {{kanji.hanViet}}
+                        <span class="tag">Hán Việt</span> {{kanji.hanViet}}
                     </div>
     
                     <div class="meaning">
-                        Meaning: {{kanji.meaning}}
+                        <span class="tag">Meaning</span> {{kanji.meaning}}
                     </div>
     
                     <div class="onyomi">
-                        Onyomi: {{kanji.onyomi}}
+                        <span class="tag">Onyomi</span> {{kanji.onyomi}}
                     </div>
     
                     <div class="kunyomi">
-                        Kunyomi: {{kanji.kunyomi}}
+                        <span class="tag">Kunyomi</span> {{kanji.kunyomi}}
                     </div>
     
                 </div>
@@ -38,11 +38,12 @@
             kanji: {
                 type: Object,
                 required: true,
-                onyomi: String,
-                kunyomi: String,
-                meaning: String,
-                writing: String,
-                hanViet: String
+                onyomi: Array,
+                kunyomi: Array,
+                meaning: Array,
+                hanViet: Array,
+                writing: String
+                
             }
         }
     }
@@ -50,6 +51,10 @@
 
 
 <style scoped>
+    .big-writing {
+
+    }
+
     .card {
         width: 50%
     }

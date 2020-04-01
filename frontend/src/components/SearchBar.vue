@@ -31,7 +31,6 @@
                     type: String,
                     default: ''
                 },
-                isSearching: false
             }
         },
         methods: {
@@ -40,13 +39,12 @@
             },
 
             async lookup() {
-                // if (this.isSearching) {
-                //     return
-                // }
-                // this.isSearching = true
+                // Empty input
+
                 const axios = require('axios').default
                 let jishoUrl = encodeURI("http://localhost:8000/jisho/" + this.kanji)
                 let hanVietUrl = encodeURI("http://localhost:8000/han-viet/" + this.kanji)
+                document.getElementById("kanji-input").value = null
 
                 axios.get(jishoUrl).then(jishoResponse => {
                     let resultBundle = jishoResponse.data
@@ -61,7 +59,6 @@
                     console.log(error)
                 })
 
-                this.isSearching = false
             }
         }
     }

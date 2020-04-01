@@ -24,16 +24,16 @@ app.get('/jisho/:kanji', (req, res) => {
 
     kanji = req.params.kanji
     jishoBundle = {
-        onyomi: String,
-        kunyomi: String,
-        meaning: String,
+        onyomi: Array,
+        kunyomi: Array,
+        meaning: Array,
         writing: String
     }
 
     jisho.searchForKanji(kanji).then(result => {
-        jishoBundle.kunyomi = Array(result.kunyomi).toString()
-        jishoBundle.onyomi = Array(result.onyomi).toString()
-        jishoBundle.meaning = result.meaning
+        jishoBundle.kunyomi = result.kunyomi
+        jishoBundle.onyomi = result.onyomi
+        jishoBundle.meaning = result.meaning.split(', ')
         jishoBundle.writing = kanji
         
         res.send(jishoBundle)
