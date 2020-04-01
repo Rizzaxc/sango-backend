@@ -8,19 +8,19 @@
     
                 <div class="column" id="kanji-info">
                     <div class="han-viet">
-                        <KanjiInfo name="Hán Việt" :payload="kanji.hanViet" />
+                        <KanjiInfo name="Hán Việt" :mostRecent="this.mostRecent" :payload="kanji.hanViet" />
                     </div>
 
                     <div class="meaning">
-                        <KanjiInfo name="Meaning" :payload="kanji.meaning" />
+                        <KanjiInfo name="Meaning" :mostRecent="this.mostRecent" :payload="kanji.meaning" />
                     </div>
 
                     <div class="onyomi">
-                        <KanjiInfo name="Onyomi" :payload="kanji.onyomi" />
+                        <KanjiInfo name="Onyomi" :mostRecent="this.mostRecent" :payload="kanji.onyomi" />
                     </div>
 
                     <div class="kunyomi">
-                        <KanjiInfo name="Kunyomi" :payload="kanji.kunyomi" />
+                        <KanjiInfo name="Kunyomi" :mostRecent="this.mostRecent" :payload="kanji.kunyomi" />
                     </div>
                 </div>
             </div>
@@ -46,7 +46,10 @@
                 meaning: Array,
                 hanViet: Array,
                 writing: String
-                
+            },
+            mostRecent: {
+                type: Boolean,
+                required: true
             }
         }
     }
@@ -60,6 +63,6 @@
     }
 
     .card {
-        width: 50%
+        width: 49%
     }
 </style>

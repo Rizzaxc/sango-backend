@@ -3,7 +3,7 @@
     <span class="tag is-large">{{name}}</span>
     <span 
       class="tag is-warning is-medium"
-      v-for="(entry, index) in payload"
+      v-for="(entry, index) in managedPayload"
       :key="index"
     >
       {{entry}}
@@ -16,8 +16,15 @@ export default {
   name: 'KanjiInfo',
   props: {
     name: String,
-    payload: Array
-
+    payload: Array,
+    mostRecent: Boolean
+  },
+  computed: {
+    // If the query is not the most recent, only show 2 items per line
+    managedPayload() {
+      if (this.payload.length > 2 && !this.mostRecent) return this.payload.slice(0,2)
+      return this.payload
+    }
   }
 }
 </script>

@@ -8,7 +8,8 @@
         <KanjiCard
             id="result"
             v-if="numberOfQueries > 0"
-            v-bind:kanji="mostRecent"/>
+            :kanji="mostRecent"
+            :mostRecent="true"/>
 
         <div class="search-history"
             v-if="numberOfQueries > 1"
@@ -16,7 +17,8 @@
           <KanjiCard
             v-for="(pastKanji, index) in searchHistory"
             :key="index"
-            v-bind:kanji="pastKanji"/>
+            :kanji="pastKanji"
+            :mostRecent="false"/>
         </div>
       </div>
     </div>
@@ -85,7 +87,7 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
   align-content: space-evenly;
-  align-items: top;
+  justify-content: space-between;
   height: 80%;
   margin-top: 2px;
 }
