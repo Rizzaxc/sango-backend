@@ -1,26 +1,41 @@
 <template>
     <div class="card">
+        <div class="modal" id="full-card" v-if="showFull === false">
+            <div class="modal-background" @click="closeModal()"></div>
+            <div class="modal-card">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Detailed Kanji View</p>
+                    <button class="delete" aria-label="close" @click="closeModal()"></button>
+                </header>
+
+                <section class="modal-card-body">
+                    <KanjiCard :kanji="this.kanji" :showFull="true" />
+                </section>
+            </div>
+
+        </div>
+
         <div class="card-content">
             <div class="columns">
                 <div class="column is-size-1 is-one-quarter">
-                    <a id="big-writing">{{kanji.writing}}</a>
+                    <a  @click="launchModal()" id="big-writing">{{kanji.writing}}</a>
                 </div>
     
                 <div class="column" id="kanji-info">
                     <div class="han-viet">
-                        <KanjiInfo name="Hán Việt" :mostRecent="this.mostRecent" :payload="kanji.hanViet" />
+                        <KanjiInfo name="Hán Việt" :showFull="this.showFull" :payload="kanji.hanViet" />
                     </div>
 
                     <div class="meaning">
-                        <KanjiInfo name="Meaning" :mostRecent="this.mostRecent" :payload="kanji.meaning" />
+                        <KanjiInfo name="Meaning" :showFull="this.showFull" :payload="kanji.meaning" />
                     </div>
 
                     <div class="onyomi">
-                        <KanjiInfo name="Onyomi" :mostRecent="this.mostRecent" :payload="kanji.onyomi" />
+                        <KanjiInfo name="Onyomi" :showFull="this.showFull" :payload="kanji.onyomi" />
                     </div>
 
                     <div class="kunyomi">
-                        <KanjiInfo name="Kunyomi" :mostRecent="this.mostRecent" :payload="kanji.kunyomi" />
+                        <KanjiInfo name="Kunyomi" :showFull="this.showFull" :payload="kanji.kunyomi" />
                     </div>
                 </div>
             </div>
@@ -47,9 +62,23 @@
                 hanViet: Array,
                 writing: String
             },
-            mostRecent: {
+            showFull: {
                 type: Boolean,
                 required: true
+            }
+        },
+        methods: {
+            launchModal() {
+                console.log(this.showFull)
+                if (this.showFull === false) {
+                    document.getElementById('full-card').classList.add('is-active')
+                }
+            },
+
+            closeModal() {
+                if (this.showFull === false) {
+                    document.getElementById('full-card').classList.remove('is-active')
+                }
             }
         }
     }
@@ -63,6 +92,6 @@
     }
 
     .card {
-        width: 49%
+        width: 100%
     }
 </style>

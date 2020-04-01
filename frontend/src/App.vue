@@ -9,16 +9,17 @@
             id="result"
             v-if="numberOfQueries > 0"
             :kanji="mostRecent"
-            :mostRecent="true"/>
+            :showFull="true"/>
 
         <div class="search-history"
             v-if="numberOfQueries > 1"
         >
           <KanjiCard
+            id="savedQueries"
             v-for="(pastKanji, index) in searchHistory"
             :key="index"
             :kanji="pastKanji"
-            :mostRecent="false"/>
+            :showFull="false"/>
         </div>
       </div>
     </div>
@@ -77,8 +78,8 @@ export default {
 </script>
 
 <style scoped>
-#result {
-    width: 100%;
+#savedQueries {
+    width: 49%;
 
 }
 

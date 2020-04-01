@@ -17,12 +17,12 @@ export default {
   props: {
     name: String,
     payload: Array,
-    mostRecent: Boolean
+    showFull: Boolean
   },
   computed: {
-    // If the query is not the most recent, only show 2 items per line
+    // Only show 2 items per line if card doesn't require full
     managedPayload() {
-      if (this.payload.length > 2 && !this.mostRecent) return this.payload.slice(0,2)
+      if (this.payload.length > 2 && !this.showFull) return this.payload.slice(0,2)
       return this.payload
     }
   }
