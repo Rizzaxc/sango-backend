@@ -8,16 +8,15 @@
         <KanjiCard
             id="result"
             v-if="numberofQueries > 0"
-            v-bind:kanji="mostRecent"
-        />
+            v-bind:kanji="mostRecent"/>
 
-
-        <div class="search-history">
+        <div class="search-history"
+            v-if="numberofQueries > 1"
+        >
           <KanjiCard
             v-for="(pastKanji, index) in searchHistory"
             :key="index"
-            v-bind:kanji="pastKanji"
-          />
+            v-bind:kanji="pastKanji"/>
         </div>
       </div>
     </div>
