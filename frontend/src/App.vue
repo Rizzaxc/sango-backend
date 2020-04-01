@@ -7,11 +7,11 @@
 
         <KanjiCard
             id="result"
-            v-if="numberofQueries > 0"
+            v-if="numberOfQueries > 0"
             v-bind:kanji="mostRecent"/>
 
         <div class="search-history"
-            v-if="numberofQueries > 1"
+            v-if="numberOfQueries > 1"
         >
           <KanjiCard
             v-for="(pastKanji, index) in searchHistory"
@@ -49,15 +49,18 @@ export default {
   methods: {
     updateResults(newKanji) {
       this.allQueries.unshift(newKanji);
+      if (this.numberOfQueries > 7) {
+          this.allQueries.pop()
+      }
     }
   },
   computed: {
     
-    numberofQueries() {
+    numberOfQueries() {
       return this.allQueries.length;
     },
     mostRecent() {
-      if (this.numberofQueries > 0) {
+      if (this.numberOfQueries > 0) {
         return this.allQueries[0];
       } else {
         return null;
@@ -82,6 +85,6 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
   align-content: space-evenly;
-  height: 100%;
+  height: 80%;
 }
 </style>
