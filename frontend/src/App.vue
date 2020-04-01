@@ -9,13 +9,20 @@
           <div class="column is-half">
             <KanjiCard 
                 id="result"
-                v-if="typeof latestResult !== 'undefined'"
-                v-bind:kanji="latestResult"
+                v-if="typeof mostRecent !== 'undefined'"
+                v-bind:kanji="mostRecent"
             />
           </div>
         </div>
 
         <div class="search-history is-size-4">
+            <KanjiCard             
+                v-for="pastKanji in history.slice().reverse()"
+                :key="pastKanji"
+                v-bind:kanji="pastKanji"
+            />
+
+
         </div>
 
 
@@ -41,7 +48,8 @@
         },
         data() {
             return {
-                results: [],
+                history: [],
+                mostRecent: undefined
             }
         },
         components: {
@@ -51,14 +59,10 @@
         },
         methods: {
             updateResults(newKanji) {
-                this.results.push(newKanji)
+                this.history.push(this.mostRecent)
+                this.mostRecent = newKanji
             }
         },
-        computed: {
-            latestResult() {
-                return this.results.slice(-1)[0]
-            }
-        }
     }
 </script>
 
