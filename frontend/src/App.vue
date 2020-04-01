@@ -4,15 +4,13 @@
     <div class="columns is-centered">
       <div class="column is-half">
         <SearchBar />
-        <div class="columns is-centered">
-          <div class="column is-half">
-            <KanjiCard
-              id="result"
-              v-if="numberofQueries > 0"
-              v-bind:kanji="mostRecent"
-            />
-          </div>
-        </div>
+
+        <KanjiCard
+            id="result"
+            v-if="numberofQueries > 0"
+            v-bind:kanji="mostRecent"
+        />
+
 
         <div class="search-history">
           <KanjiCard
@@ -76,7 +74,8 @@ export default {
 
 <style scoped>
 #result {
-  width: 100%;
+    width: 100%;
+
 }
 
 .search-history {
