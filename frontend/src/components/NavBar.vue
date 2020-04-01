@@ -8,7 +8,7 @@
 
         <div class="navbar-menu">
             <div class="navbar-start">
-                <a class="navbar-item">
+                <a class="navbar-item" href="/">
                     <strong>Kanji</strong>
                 </a>
                 <a class="navbar-item">

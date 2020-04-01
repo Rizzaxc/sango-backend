@@ -85,6 +85,8 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
   align-content: space-evenly;
+  align-items: top;
   height: 80%;
+  margin-top: 2px;
 }
 </style>

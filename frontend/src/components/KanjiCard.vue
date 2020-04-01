@@ -8,58 +8,20 @@
     
                 <div class="column" id="kanji-info">
                     <div class="han-viet">
-                        <div class="tags">
-                            <span class="tag is-large">Hán Việt</span>
-                            <span 
-                                class="tag is-warning is-medium"
-                                v-for="(phatAm, index) in kanji.hanViet"
-                                :key="index"
-                            >
-                                {{phatAm}}
-                            </span>
-                        </div>
+                        <KanjiInfo name="Hán Việt" :payload="kanji.hanViet" />
                     </div>
 
                     <div class="meaning">
-                        <div class="tags">
-                            <span class="tag is-large">Meaning</span>
-                            <span 
-                                class="tag is-warning is-medium"
-                                v-for="(meaning, index) in kanji.meaning"
-                                :key="index"
-                            >
-                                {{meaning}}
-                            </span>
-                        </div>
+                        <KanjiInfo name="Meaning" :payload="kanji.meaning" />
                     </div>
 
-
                     <div class="onyomi">
-                        <div class="tags">
-                            <span class="tag is-large">Onyomi</span>
-                            <span 
-                                class="tag is-warning is-medium"
-                                v-for="(onyomi, index) in kanji.onyomi"
-                                :key="index"
-                            >
-                                {{onyomi}}
-                            </span>
-                        </div>
+                        <KanjiInfo name="Onyomi" :payload="kanji.onyomi" />
                     </div>
 
                     <div class="kunyomi">
-                        <div class="tags">
-                            <span class="tag is-large">Kunyomi</span>
-                            <span 
-                                class="tag is-warning is-medium"
-                                v-for="(kunyomi, index) in kanji.kunyomi"
-                                :key="index"
-                            >
-                                {{kunyomi}}
-                            </span>
-                        </div>
+                        <KanjiInfo name="Kunyomi" :payload="kanji.kunyomi" />
                     </div>
-    
                 </div>
             </div>
         </div>
@@ -69,8 +31,12 @@
 
 
 <script>
+    import KanjiInfo from "./KanjiInfo.vue"
     export default {
         name: 'KanjiCard',
+        components: {
+            KanjiInfo
+        },
         props: {
             kanji: {
                 type: Object,
@@ -89,7 +55,8 @@
 
 <style scoped>
     .big-writing {
-
+        width: 100%;
+        height: 100%;
     }
 
     .card {
