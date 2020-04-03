@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        <div class="modal" id="full-card" v-if="showFull === false">
+        <div class="modal" :id="'full-card ' + this.kanji.writing" v-if="showFull === false">
             <div class="modal-background" @click="closeModal()"></div>
             <div class="modal-card">
                 <header class="modal-card-head">
@@ -18,7 +18,9 @@
         <div class="card-content">
             <div class="columns">
                 <div class="column is-size-1 is-one-quarter">
-                    <a  @click="launchModal()" id="big-writing">{{kanji.writing}}</a>
+                    <a @click="launchModal()" id="big-writing">
+                        {{kanji.writing}}
+                    </a>
                 </div>
     
                 <div class="column" id="kanji-info">
@@ -69,15 +71,15 @@
         },
         methods: {
             launchModal() {
-                console.log(this.showFull)
+                console.log(this.kanji.meaning)
                 if (this.showFull === false) {
-                    document.getElementById('full-card').classList.add('is-active')
+                    document.getElementById('full-card ' + this.kanji.writing).classList.add('is-active')
                 }
             },
 
             closeModal() {
                 if (this.showFull === false) {
-                    document.getElementById('full-card').classList.remove('is-active')
+                    document.getElementById('full-card ' + this.kanji.writing).classList.remove('is-active')
                 }
             }
         }
@@ -89,6 +91,8 @@
     .big-writing {
         width: 100%;
         height: 100%;
+        font-size: large;
+        font-weight: bold;
     }
 
     .card {
