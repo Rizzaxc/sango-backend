@@ -5,6 +5,7 @@
       <div class="column is-half">
         <SearchBar />
 
+
         <KanjiCard
             id="result"
             v-if="numberOfQueries > 0"

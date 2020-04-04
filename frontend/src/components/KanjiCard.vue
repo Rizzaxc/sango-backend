@@ -17,10 +17,11 @@
 
         <div class="card-content">
             <div class="columns">
-                <div class="column is-size-1 is-one-quarter">
-                    <a @click="launchModal()" id="big-writing">
+                <div class="column is-one-quarter writing-container" >
+                    <a @click="launchModal()" id="kanji-writing">
                         {{kanji.writing}}
                     </a>
+            
                 </div>
     
                 <div class="column" id="kanji-info">
@@ -71,7 +72,6 @@
         },
         methods: {
             launchModal() {
-                console.log(this.kanji.meaning)
                 if (this.showFull === false) {
                     document.getElementById('full-card ' + this.kanji.writing).classList.add('is-active')
                 }
@@ -88,14 +88,15 @@
 
 
 <style scoped>
-    .big-writing {
-        width: 100%;
-        height: 100%;
-        font-size: large;
-        font-weight: bold;
+
+
+    .writing-container {
+        font-size: 5vw;
+        text-align: center
     }
 
     .card {
-        width: 100%
+        width: 100%;
+        margin: 1px;
     }
 </style>
