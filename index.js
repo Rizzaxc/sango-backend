@@ -5,7 +5,7 @@ const cors = require('cors')
 const port = process.env.PORT || 3000
 
 let corsOptions = {
-    origin: 'https://rizzaxc-sango.herokuapp.com/index.html',
+    origin: 'https://rizzaxc-sango.herokuapp.com',
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 
