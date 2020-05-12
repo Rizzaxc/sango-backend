@@ -79,14 +79,14 @@ async function main() {
         const collection = client.db("Sango").collection("Kanji");
         // Add entries to each Kanji
 
-        let start = 1
-        let $ = {Level: {$gte: start, $lt: start+1}}
+        let start = 6
+        let end = 10
+        let $ = {Level: {$gte: start, $lte: end}}
         collection.find($, (err, results) => {
             if (err) throw err;
             results.forEach(kanji => {
                 let writing = kanji.Writing
                 hvScraper.lookup(writing).then(amHanViet => {
-                    console.log(amHanViet)
                     jisho.searchForKanji(writing).then(jishoData => {
                         let $filter = {Writing: writing}
                         let $update = { $set: { 
