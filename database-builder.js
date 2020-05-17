@@ -79,8 +79,8 @@ async function main() {
         const collection = client.db("Sango").collection("Kanji");
         // Add entries to each Kanji
 
-        let start = 6
-        let end = 10
+        let start = 46
+        let end = 50
         let $ = {Level: {$gte: start, $lte: end}}
         collection.find($, (err, results) => {
             if (err) throw err;

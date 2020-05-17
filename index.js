@@ -27,63 +27,86 @@ let hvScraper = new HanVietScraper()
 
 const QUERY_TYPE = {
     KANJI: 1,
-    MEANING: 2,
+    LATIN: 2,
     READING: 3,
+    HAN_VIET: 4,
     ERROR: -1
 }
 
+const MAXIMUM_RESULTS_RETURNED = 7
 
-function getQueryType(query) {
+function isVietnamese(word) {
+    const vnCharacters = 'aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆ fFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTu UùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ'
+
+
+    for (let i = 0; i < word.length; i++) {
+        let c = word.charAt(i)
+        if (!vnCharacters.includes(c)) {
+            return false
+        }
+    }
+
+    return true
+}
+
+
+function getFilter(query) {
     let l = query.length
     let rLatin = /^[A-Za-z]+$/
+    let $filter = -1
     // If the query length is 1 and is Kanji
     if (l == 1 && nihongo.isKanji(query)) {
-        return QUERY_TYPE.KANJI
+        $filter = {Writing: query}
+    }
+
+    // If the query length is > 1 and in Latin
+    // Search both meaning and han-viet since this can't detect no-sign vietnamese text
+    else if (l > 1 && query.match(rLatin)) {
+        $filter = {$or: [{Meaning: query}, {AmHanViet: query}]}
+    }
+
+    // If the query is in signed Vietnamese
+    else if (isVietnamese(query)) {
+        $filter = {AmHanViet: query}
     }
     
-    // If the query length is > 1 and in Latin
-    if (l > 1 && query.match(rLatin)) {
-        return QUERY_TYPE.MEANING
+    // If the query length is between 1-10 and in Japanese
+    else if (l > 1 && l < 10 && nihongo.isJapanese(query)) {
+        let $on = {Onyomi: query}
+
+        /** Build the regex pattern for kunyomi
+        It must start with the starting kana
+        May have a dot inbetween 2 kanas
+        May not end with the last kana **/
+        let pattern =　'^'
+        for (let i = 0; i < l; i++) {
+            pattern += query.charAt(i) + '.?'
+        }
+
+        let $kun = {Kunyomi: {$regex: `${pattern}`}}
+        $filter = {$or: [$on, $kun]}
     }
-    // If the query length is > 1 and in Japanese
-    if (l > 1 && nihongo.isJapanese(query)) {
-        return QUERY_TYPE.READING
-    }
-    // Else error
-    return QUERY_TYPE.ERROR
+    return $filter
 }
 
 app.get('/search/:query', (req, res) => {
     query = req.params.query
-    let queryType = getQueryType(query)
     const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true })
     client.connect(async err => {
         const collection = client.db("Sango").collection("Kanji")
-        let $filter = {}
+        let $filter = getFilter(query)
         let $projection = {_id: 0}
-        switch (queryType) {
-            case QUERY_TYPE.KANJI:
-                $filter = {Writing: query}
-                break
-            case QUERY_TYPE.MEANING:
-                $filter = {Meaning: query}
-                break
-            case QUERY_TYPE.READING:
-                $filter = {$or: [{Onyomi: query}, {Kunyomi: query}]}
-                break
-            case QUERY_TYPE.ERROR:
-                console.log('Query type error: ' + query)
-                client.close()
-                return -1
-            default:
-                client.close()
-                return -1
+
+        // If the query is invalid
+        if ($filter == -1) {
+            client.close()
+            res.status(400).send('Error: Bad query')
         }
-        let results = await collection.find($filter).project($projection).toArray()
+        let results = await collection.find($filter).project($projection).limit(MAXIMUM_RESULTS_RETURNED).toArray()
         results = JSON.stringify(results)
-        console.log(queryType, results)
         client.close()
         res.send(results)
+        
     })
 
 })
