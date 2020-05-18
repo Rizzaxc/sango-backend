@@ -25,14 +25,6 @@ let HanVietScraper = require('./han-viet-scraper')
 let hvScraper = new HanVietScraper()
 
 
-const QUERY_TYPE = {
-    KANJI: 1,
-    LATIN: 2,
-    READING: 3,
-    HAN_VIET: 4,
-    ERROR: -1
-}
-
 const MAXIMUM_RESULTS_RETURNED = 7
 
 function isVietnamese(word) {
@@ -113,38 +105,38 @@ app.get('/search/:query', (req, res) => {
 
 
 
-app.get('/jisho/:kanji', (req, res) => {
+// app.get('/jisho/:kanji', (req, res) => {
 
-    kanji = req.params.kanji
-    jishoBundle = {
-        onyomi: Array,
-        kunyomi: Array,
-        meaning: Array,
-        writing: String
-    }
+//     kanji = req.params.kanji
+//     jishoBundle = {
+//         onyomi: Array,
+//         kunyomi: Array,
+//         meaning: Array,
+//         writing: String
+//     }
 
-    jisho.searchForKanji(kanji).then(result => {
-        jishoBundle.kunyomi = result.kunyomi
-        jishoBundle.onyomi = result.onyomi
-        jishoBundle.meaning = result.meaning.split(', ')
-        jishoBundle.writing = kanji
+//     jisho.searchForKanji(kanji).then(result => {
+//         jishoBundle.kunyomi = result.kunyomi
+//         jishoBundle.onyomi = result.onyomi
+//         jishoBundle.meaning = result.meaning.split(', ')
+//         jishoBundle.writing = kanji
         
-        res.send(jishoBundle)
-    }).catch(error => {
-        console.log(error)
-    })
+//         res.send(jishoBundle)
+//     }).catch(error => {
+//         console.log(error)
+//     })
 
-})
+// })
 
-app.get('/han-viet/:kanji', (req, res) => {
-    kanji = req.params.kanji
+// app.get('/han-viet/:kanji', (req, res) => {
+//     kanji = req.params.kanji
 
-    hvScraper.lookup(kanji).then(result => {
-        res.send({amHanViet: result})
-    }).catch(error => {
-        console.log(error)
-    })
-})
+//     hvScraper.lookup(kanji).then(result => {
+//         res.send({amHanViet: result})
+//     }).catch(error => {
+//         console.log(error)
+//     })
+// })
 
 
 
