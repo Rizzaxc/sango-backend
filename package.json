@@ -20,8 +20,8 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "mongodb": "^3.5.7",
-    "nihongo": "^1.0.1",
     "unofficial-jisho-api": "^2.0.8",
-    "utf8": "^3.0.0"
+    "utf8": "^3.0.0",
+    "wanakana": "^4.0.2"
   }
 }

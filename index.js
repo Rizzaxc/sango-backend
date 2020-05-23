@@ -12,8 +12,7 @@ let corsOptions = {
 const MongoClient = require('mongodb').MongoClient
 const uri = "mongodb+srv://rizzaxc:mR3^5nAV6B^Hu9S7@sango-arjgd.mongodb.net/test?retryWrites=true&w=majority"
 
-const nihongo = require('nihongo') // Japanese text checker
-
+const wanakana = require('wanakana') // 
 app.use(bodyParser.json());
 app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }))
@@ -41,20 +40,40 @@ function isVietnamese(word) {
     return true
 }
 
+function buildPatternForKunyomi(query) {
+    /** Build the regex pattern for kunyomi
+        It must start with the starting kana
+        May have a dot inbetween 2 kanas
+        May not end with the last kana **/
+    let pattern =　'^'
+    for (let i = 0; i < query.length; i++) {
+        pattern += query.charAt(i) + '.?'
+    }
+
+    return pattern
+}
+
 
 function getFilter(query) {
     let l = query.length
     let rLatin = /^[A-Za-z]+$/
     let $filter = -1
     // If the query length is 1 and is Kanji
-    if (l == 1 && nihongo.isKanji(query)) {
+    if (l == 1 && wanakana.isKanji(query)) {
         $filter = {Writing: query}
     }
 
     // If the query length is > 1 and in Latin
     // Search both meaning and han-viet since this can't detect no-sign vietnamese text
+    // Search kun/ on using converted query
     else if (l > 1 && query.match(rLatin)) {
-        $filter = {$or: [{Meaning: query}, {AmHanViet: query}]}
+        let $meaning = {Meaning: query}
+        let $AmHanViet = {AmHanViet: query}
+        let $on = {Onyomi: wanakana.toKatakana(query)}
+        let pattern = buildPatternForKunyomi(wanakana.toHiragana(query))
+        let $kun = {Kunyomi: {$regex: `${pattern}`}}
+
+        $filter = {$or: [$meaning, $AmHanViet, $on, $kun]}
     }
 
     // If the query is in signed Vietnamese
@@ -63,17 +82,12 @@ function getFilter(query) {
     }
     
     // If the query length is between 1-10 and in Japanese
-    else if (l > 1 && l < 10 && nihongo.isJapanese(query)) {
-        let $on = {Onyomi: query}
+    else if (l > 1 && l < 10 && wanakana.isJapanese(query)) {
+        // Convert the japanese text to Katakana to search Onyomi
+        let $on = {Onyomi: wanakana.toKatakana(query)}
 
-        /** Build the regex pattern for kunyomi
-        It must start with the starting kana
-        May have a dot inbetween 2 kanas
-        May not end with the last kana **/
-        let pattern =　'^'
-        for (let i = 0; i < l; i++) {
-            pattern += query.charAt(i) + '.?'
-        }
+        // Build a regex pattern for Kunyomi
+        let pattern = buildPatternForKunyomi(query)
 
         let $kun = {Kunyomi: {$regex: `${pattern}`}}
         $filter = {$or: [$on, $kun]}
