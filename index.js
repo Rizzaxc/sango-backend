@@ -96,7 +96,7 @@ function getFilter(query) {
 }
 
 app.get('/search/:query', (req, res) => {
-    query = req.params.query
+    query = req.params.query.toLowerCase()
     const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true })
     client.connect(async err => {
         const collection = client.db("Sango").collection("Kanji")
